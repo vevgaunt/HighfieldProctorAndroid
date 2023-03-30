@@ -129,7 +129,7 @@ class CameraFragment : Fragment() {
         // Make sure that all permissions are still present, since the
         // user could have removed them while the app was in paused state.
         if (!PermissionsFragment.hasPermissions(requireContext())) {
-            Navigation.findNavController(requireActivity(), R.id.fragment_container).navigate(
+            Navigation.findNavController(requireActivity(), R.id.fragment_camera_container).navigate(
                     CameraFragmentDirections.actionCameraToPermissions()
             )
         }
@@ -549,7 +549,7 @@ class CameraFragment : Fragment() {
             // Only navigate when the gallery has photos
             lifecycleScope.launch {
                 if (mediaStoreUtils.getImages().isNotEmpty()) {
-                    Navigation.findNavController(requireActivity(), R.id.fragment_container)
+                    Navigation.findNavController(requireActivity(), R.id.fragment_camera_container)
                         .navigate(CameraFragmentDirections.actionCameraToGallery(
                             mediaStoreUtils.mediaStoreCollection.toString()
                         )

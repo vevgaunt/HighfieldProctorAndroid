@@ -116,7 +116,7 @@ class GalleryFragment internal constructor() : Fragment() {
 
         // Handle back button press
         fragmentGalleryBinding.backButton.setOnClickListener {
-            Navigation.findNavController(requireActivity(), R.id.fragment_container)
+            Navigation.findNavController(requireActivity(), R.id.fragment_camera_container)
                 .navigateUp()
         }
 
@@ -172,7 +172,7 @@ class GalleryFragment internal constructor() : Fragment() {
                             if (mediaList.isEmpty()) {
                                 Navigation.findNavController(
                                     requireActivity(),
-                                    R.id.fragment_container
+                                    R.id.fragment_camera_container
                                 ).navigateUp()
                             }
 

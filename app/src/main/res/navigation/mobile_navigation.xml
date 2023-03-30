@@ -6,24 +6,6 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.highfieldproctorandroid.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.highfieldproctorandroid.fragments.CameraFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.highfieldproctorandroid.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
         android:id="@+id/permissions_fragment"
         android:name="com.example.highfieldproctorandroid.fragments.PermissionsFragment"
         android:label="PermissionsFragment" >
@@ -61,5 +43,29 @@
             android:name="root_directory"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.highfieldproctorandroid.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="com.example.highfieldproctorandroid.fragments.CameraFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_camera_container" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.highfieldproctorandroid.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.highfieldproctorandroid.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
 
 </navigation>
