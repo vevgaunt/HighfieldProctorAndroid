@@ -16,6 +16,12 @@
             app:popUpTo="@id/permissions_fragment"
             app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/action_permissions_to_capture"
+            app:destination="@id/capture_fragment"
+            app:popUpTo="@id/permissions_fragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment
@@ -33,6 +39,12 @@
             app:popUpTo="@id/camera_fragment"
             app:popUpToInclusive="true"/>
 
+        <action
+            android:id="@+id/action_permissions_to_capture"
+            app:destination="@id/capture_fragment"
+            app:popUpTo="@id/permissions_fragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment
@@ -42,6 +54,33 @@
         <argument
             android:name="root_directory"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/capture_fragment"
+        android:name="com.example.highfieldproctorandroid.fragments.CaptureFragment"
+        android:label="Capture" >
+
+        <action
+            android:id="@+id/action_capture_to_permissions"
+            app:destination="@id/permissions_fragment" />
+        <action
+            android:id="@+id/action_capture_to_video_viewer"
+            app:destination="@id/video_viewer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/video_viewer"
+        android:name="com.example.highfieldproctorandroid.fragments.VideoViewerFragment"
+        android:label="fragment_video_viewer"
+        tools:layout="@layout/fragment_video_viewer" >
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+
+        <action
+            android:id="@+id/action_video_viewer_to_capture"
+            app:destination="@id/capture_fragment" />
     </fragment>
 
     <fragment
@@ -57,15 +96,21 @@
         tools:layout="@layout/fragment_camera_container" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.highfieldproctorandroid.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_capture"
+        android:name="com.example.highfieldproctorandroid.fragments.CaptureFragment"
+        android:label="@string/capture"
+        tools:layout="@layout/fragment_video_container" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.highfieldproctorandroid.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_dashboard"-->
+<!--        android:name="com.example.highfieldproctorandroid.ui.dashboard.DashboardFragment"-->
+<!--        android:label="@string/title_dashboard"-->
+<!--        tools:layout="@layout/fragment_dashboard" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:name="com.example.highfieldproctorandroid.ui.notifications.NotificationsFragment"-->
+<!--        android:label="@string/title_notifications"-->
+<!--        tools:layout="@layout/fragment_notifications" />-->
 
 </navigation>

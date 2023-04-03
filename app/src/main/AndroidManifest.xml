@@ -5,14 +5,17 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.example.highfieldproctorandroid">
 
+    <!-- Permission declarations -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <!-- Enable instant app support -->
     <dist:module dist:instant="true" />
 
-    <!-- Declare features -->
-    <uses-feature android:name="android.hardware.camera" />
-
-    <!-- Declare permissions -->
-    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- A camera with burst capability is required to use this application -->
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:name=".MainApplication"
@@ -36,8 +39,7 @@
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
             tools:targetApi="O"
             android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
 
 
             <intent-filter>
@@ -68,6 +70,17 @@
             <meta-data android:name="android.notch_support" android:value="true"/>
 
         </activity>
+
+        <!-- FileProvider used to share media with other apps -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

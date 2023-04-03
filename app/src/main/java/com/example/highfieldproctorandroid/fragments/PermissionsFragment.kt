@@ -21,6 +21,10 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -28,9 +32,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.highfieldproctorandroid.R
+import com.example.highfieldproctorandroid.databinding.FragmentPermissionBinding
 
-private var PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
-
+private var PERMISSIONS_REQUIRED = arrayOf(
+    Manifest.permission.CAMERA,
+    Manifest.permission.RECORD_AUDIO)
 /**
  * The sole purpose of this fragment is to request permissions and, once granted, display the
  * camera fragment to the user.
@@ -55,10 +61,34 @@ class PermissionsFragment : Fragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentPermissionBinding.inflate(inflater, container, false).also {
+            if (hasPermissions(requireContext())) {
+                navigateToCapture()
+            } else {
+                Log.e(PermissionsFragment::class.java.simpleName,
+                    "Re-requesting permissions ...")
+                activityResultLauncher.launch(PERMISSIONS_REQUIRED)
+            }
+        }.root
+    }
+
     private fun navigateToCamera() {
         lifecycleScope.launchWhenStarted {
             Navigation.findNavController(requireActivity(), R.id.fragment_camera_container).navigate(
                     PermissionsFragmentDirections.actionPermissionsToCamera())
+        }
+    }
+
+    private fun navigateToCapture() {
+        //video camera
+        lifecycleScope.launchWhenStarted {
+            Navigation.findNavController(requireActivity(), R.id.fragment_video_container).navigate(
+                PermissionsFragmentDirections.actionPermissionsToCapture())
         }
     }
 
@@ -68,7 +98,7 @@ class PermissionsFragment : Fragment() {
             // Handle Permission granted/rejected
             var permissionGranted = true
             permissions.entries.forEach {
-                if (it.key in PERMISSIONS_REQUIRED && it.value == false)
+                if (it.key in PERMISSIONS_REQUIRED && !it.value)
                     permissionGranted = false
             }
             if (!permissionGranted) {
