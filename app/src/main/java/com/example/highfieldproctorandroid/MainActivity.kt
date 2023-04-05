@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         setSupportActionBar(findViewById(R.id.toolbar))
-        getSupportActionBar()?.hide();
+        getSupportActionBar()?.hide()
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

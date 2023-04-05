@@ -6,9 +6,9 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/permissions_fragment"
-        android:name="com.example.highfieldproctorandroid.fragments.PermissionsFragment"
-        android:label="PermissionsFragment" >
+        android:id="@+id/permissions_fragment_camera"
+        android:name="com.example.highfieldproctorandroid.fragments.CameraPermissionsFragment"
+        android:label="CameraPermissionsFragment" >
 
         <action
             android:id="@+id/action_permissions_to_camera"
@@ -16,12 +16,18 @@
             app:popUpTo="@id/permissions_fragment"
             app:popUpToInclusive="true" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/permissions_fragment_capture"
+        android:name="com.example.highfieldproctorandroid.fragments.CapturePermissionsFragment"
+        android:label="CapturePermissionsFragment" >
+
         <action
             android:id="@+id/action_permissions_to_capture"
             app:destination="@id/capture_fragment"
             app:popUpTo="@id/permissions_fragment"
             app:popUpToInclusive="true"/>
-
     </fragment>
 
     <fragment

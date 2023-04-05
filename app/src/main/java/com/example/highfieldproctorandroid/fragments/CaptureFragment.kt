@@ -37,7 +37,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.TextView
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -60,7 +60,9 @@ import com.example.highfieldproctorandroid.extensions.getAspectRatio
 import com.example.highfieldproctorandroid.extensions.getAspectRatioString
 import com.example.highfieldproctorandroid.extensions.getNameString
 import com.example.highfieldproctorandroid.utils.GenericListAdapter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -157,7 +159,7 @@ class CaptureFragment : Fragment() {
      * After this function, user could start/pause/resume/stop recording and application listens
      * to VideoRecordEvent for the current recording status.
      */
-    @SuppressLint("MissingPermission")
+    //@SuppressLint("MissingPermission")
     private fun startRecording() {
         // create MediaStoreOutputOptions for our recorder: resulting our recording!
         val name = "CameraX-recording-" +

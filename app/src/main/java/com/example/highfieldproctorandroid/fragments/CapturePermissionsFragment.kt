@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Android Open Source Project
+ * Copyright 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,11 @@ import com.example.highfieldproctorandroid.databinding.FragmentPermissionBinding
 private var PERMISSIONS_REQUIRED = arrayOf(
     Manifest.permission.CAMERA,
     Manifest.permission.RECORD_AUDIO)
-/**
- * The sole purpose of this fragment is to request permissions and, once granted, display the
- * camera fragment to the user.
- */
-class PermissionsFragment : Fragment() {
 
+/**
+ * This [Fragment] requests permissions and, once granted, it will navigate to the next fragment
+ */
+class CapturePermissionsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,11 +55,8 @@ class PermissionsFragment : Fragment() {
         if (!hasPermissions(requireContext())) {
             // Request camera-related permissions
             activityResultLauncher.launch(PERMISSIONS_REQUIRED)
-        } else {
-            navigateToCamera()
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,48 +66,39 @@ class PermissionsFragment : Fragment() {
             if (hasPermissions(requireContext())) {
                 navigateToCapture()
             } else {
-                Log.e(PermissionsFragment::class.java.simpleName,
+                Log.e(CapturePermissionsFragment::class.java.simpleName,
                     "Re-requesting permissions ...")
                 activityResultLauncher.launch(PERMISSIONS_REQUIRED)
             }
         }.root
     }
-
-    private fun navigateToCamera() {
-        lifecycleScope.launchWhenStarted {
-            Navigation.findNavController(requireActivity(), R.id.fragment_camera_container).navigate(
-                    PermissionsFragmentDirections.actionPermissionsToCamera())
+    companion object {
+        /** Convenience method used to check if all permissions required by this app are granted */
+        fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
     }
-
-    private fun navigateToCapture() {
-        //video camera
-        lifecycleScope.launchWhenStarted {
-            Navigation.findNavController(requireActivity(), R.id.fragment_video_container).navigate(
-                PermissionsFragmentDirections.actionPermissionsToCapture())
-        }
-    }
-
     private val activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
         { permissions ->
             // Handle Permission granted/rejected
             var permissionGranted = true
             permissions.entries.forEach {
-                if (it.key in PERMISSIONS_REQUIRED && !it.value)
+                if (it.key in PERMISSIONS_REQUIRED && it.value == false)
                     permissionGranted = false
+            }
+            if (permissionGranted && !permissions.isEmpty()) {
+                navigateToCapture()
             }
             if (!permissionGranted) {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
-            } else {
-                navigateToCamera()
             }
         }
 
-    companion object {
-        /** Convenience method used to check if all permissions required by this app are granted */
-        fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
-            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    private fun navigateToCapture() {
+        lifecycleScope.launchWhenStarted {
+            Navigation.findNavController(requireActivity(), R.id.fragment_video_container).navigate(
+                CapturePermissionsFragmentDirections.actionPermissionsToCapture())
         }
     }
 }
